@@ -2,16 +2,6 @@ services:
   zato:
     image: zatosource/zato-4.1:latest
     container_name: zato
-    command: >
-      bash -c "
-      if [ ! -d /opt/zato/env/qs-1/server1 ]; then
-      echo 'First run → running full initialization';
-      exec /entrypoint.sh;
-      else
-      echo 'Environment exists → skipping init';
-      exec zato start /opt/zato/env/qs-1;
-      fi
-      "
     ports:
       - "8183:8183"
       - "17010:17010"
