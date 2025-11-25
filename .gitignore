@@ -1,3 +1,7 @@
 
+.idea/
+
 # Ignore auto-generated files
-myproject/config/auto-generated/env.ini
+configurations/config/auto-generated/env.ini
+
+.env

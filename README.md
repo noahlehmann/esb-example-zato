@@ -1,42 +1,33 @@
-# Zato project blueprint
+# ESB Example with Zato
 
-This repository provides a blueprint structure for deploying Zato integration projects using DevOps practices.
+With reference to the guide at [the Zato Blueprint](https://github.com/zatosource/zato-project-blueprint).
 
-## What this is
+Find the documentation for this [here](https://zato.io/en/docs/4.1/admin/guide/install/docker.html).
 
-This is a sample project structure that demonstrates how to organize and deploy Zato projects from git to Docker containers.
-It serves as a template for building your own provisioning scripts and managing Zato environments across development, testing, and production.
-
-## What you'll learn
-
-* How to structure your Zato projects with proper separation of code, configuration, and credentials
-* Where to keep your Zato services and how to organize them
-* How to use enmasse files (YAML) to define and version-control your configuration
-* How to pass passwords and credentials securely using environment variables
-* How to install Python dependencies and manage custom configuration files
-* How to create reproducible builds that persist when containers restart
-* How to configure SSL/TLS
-
-## Project structure
+## Configure
 
 ```
-myproject
-├── config
-│   ├── enmasse
-│   │   └── enmasse.yaml       # Configuration definitions (REST channels, security, etc.)
-│   ├── python-reqs
-│   │   └── requirements.txt   # Python dependencies from PyPI
-│   └── user-conf
-│       └── myproject.ini      # Custom configuration for fast RAM access
-└── impl
-    ├── scripts
-    │   └── run-container.sh   # Blueprint provisioning script
-    └── src
-        └── api                # Your Zato services go here
-            ├── billing.py
-            └── employee.py
+cp .env.example .env
 ```
 
-## Getting started
+Then fill `.env` with values.
 
-Follow the complete [DevOps deployment tutorial](https://zato.io/en/tutorials/devops/deployment.html) to learn how to use this blueprint for your own projects.
+## Run
+
+```bash
+docker compose up -d
+```
+
+## Restart
+
+_Mind that changes will be lost due to the way Zato implements their Test Env._
+
+```bash
+docker compose up -d --force-recreate
+```
+
+## Stop
+
+```bash
+docker compose down
+```

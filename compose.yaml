@@ -1,0 +1,32 @@
+services:
+  zato:
+    image: zatosource/zato-4.1:latest
+    container_name: zato
+    command: >
+      bash -c "
+      if [ ! -d /opt/zato/env/qs-1/server1 ]; then
+      echo 'First run → running full initialization';
+      exec /entrypoint.sh;
+      else
+      echo 'Environment exists → skipping init';
+      exec zato start /opt/zato/env/qs-1;
+      fi
+      "
+    ports:
+      - "8183:8183"
+      - "17010:17010"
+      - "11223:11223"
+      - "22022:22"
+      - "35672:15672"
+      - "33033:3000"
+      - "39090:9090"
+    environment:
+      - Zato_Dashboard_Password=${ZATO_DASHBOARD_PASSWORD}
+      - Zato_IDE_Password=${ZATO_IDE_PASSWORD}
+      - Zato_SSH_Password=${ZATO_SSH_PASSWORD}
+      - Zato_Log_Env_Details=True
+      - Zato_Env_Name=Production
+    volumes:
+      - ./configurations:/opt/hot-deploy/configuration:ro
+      - ./configurations/config/enmasse/enmasse.yaml:/opt/hot-deploy/enmasse/enmasse.yaml:ro
+      - ./configurations/config/python-reqs/requirements.txt:/opt/hot-deploy/python-reqs/requirements.txt:ro
